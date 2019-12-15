@@ -1,11 +1,11 @@
-from surprise import BaselineOnly
-from surprise import accuracy
+from surprise import BaselineOnly, accuracy
 
 
 class BaseLineRecommender(object):
     """
     Use surprise's baselineonly algorithm as the baseline of prediction
     """
+
     def __init__(self):
         self.model = None
 
@@ -13,10 +13,9 @@ class BaseLineRecommender(object):
         """
         Fit the model
         """
-        baselineOnly = BaselineOnly(bsl_options={'method': 'als',
-                                                 'n_epochs': 25,
-                                                 'reg_u': 5,
-                                                 'reg_i': 3})
+        baselineOnly = BaselineOnly(
+            bsl_options={"method": "als", "n_epochs": 25, "reg_u": 5, "reg_i": 3}
+        )
         baselineOnly.fit(train)
         self.model = baselineOnly
 
