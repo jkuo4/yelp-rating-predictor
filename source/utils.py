@@ -8,7 +8,8 @@ def train_test_split_feature(feature, sample_n_users=None):
     """Split feature to train and split to predict the last rating for each user"""
 
     if sample_n_users:
-        sampled_users = pd.Series(feature.user_id.unique()).sample(sample_n_users)
+        users = pd.Series(feature.user_id.unique())
+        sampled_users = users.sample(sample_n_users, random_state=1)
         feature = feature[feature.user_id.isin(sampled_users)].copy()
 
     feature.review_date = pd.to_datetime(feature.review_date)
