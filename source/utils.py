@@ -104,5 +104,24 @@ def create_features():
     merged.to_csv("data/feature.csv", index=False)
 
 
+def train_test_split_feature(feature):
+    """Split feature to train and split to predict the last rating for each user"""
+
+    y_col = "review_stars"
+    feature.review_date = pd.to_datetime(feature.review_date)
+
+    last_review = feature.groupby("user_id").tail(1)
+    other_review = feature.drop(last_review.index)
+
+    drop_cols = [y_col, "user_id", "review_date"]
+    X_test = last_review.drop(columns=drop_cols)
+    y_test = last_review[y_col]
+
+    X_train = other_review.drop(columns=drop_cols)
+    y_train = other_review[y_col]
+
+    return X_train, X_test, y_train, y_test
+
+
 if __name__ == "__main__":
     create_features()
