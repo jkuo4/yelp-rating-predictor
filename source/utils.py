@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import pandas as pd
-from sklearn.metrics import mean_squared_error, make_scorer
+from sklearn.metrics import make_scorer, mean_squared_error
 
 
 def train_test_split_feature(feature):
