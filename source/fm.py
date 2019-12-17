@@ -13,7 +13,7 @@ class FMRecommender(object):
         self.model = xl.create_fm()
         self.model.setTXTModel(self.model_file)
         self.model.setTrain(xl.DMatrix(X_train, y_train))
-        self.model.setTest(xl.DMatrix(X_test, y_test))
+        self.xdm_test = xl.DMatrix(X_test, y_test)
 
     def fit(self, param):
         """
@@ -25,4 +25,5 @@ class FMRecommender(object):
 
     def predict(self):
         """Predict ratings."""
+        self.model.setTest(self.xdm_test)
         return self.model.predict(self.weights_file)

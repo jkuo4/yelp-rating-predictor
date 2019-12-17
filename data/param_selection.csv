@@ -1,0 +1,13 @@
+Params,RMSE
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.002, 'metric': 'rmse', 'k': 10}",1.3756082227302004
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.002, 'metric': 'rmse', 'k': 20}",1.3756280095093738
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.002, 'metric': 'rmse', 'k': 30}",1.3756090056839025
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.002, 'metric': 'rmse', 'k': 40}",1.375629977413899
+"{'task': 'reg', 'lr': 0.1, 'lambda': 0.002, 'metric': 'rmse', 'k': 20}",1.376952075091374
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.002, 'metric': 'rmse', 'k': 20}",1.3756203611232205
+"{'task': 'reg', 'lr': 0.3, 'lambda': 0.002, 'metric': 'rmse', 'k': 20}",1.3753813462973488
+"{'task': 'reg', 'lr': 0.5, 'lambda': 0.002, 'metric': 'rmse', 'k': 20}",1.37510213282997
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.0002, 'metric': 'rmse', 'k': 20}",1.358534717119975
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.002, 'metric': 'rmse', 'k': 20}",1.3756164209803654
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.02, 'metric': 'rmse', 'k': 20}",1.4039210429238747
+"{'task': 'reg', 'lr': 0.2, 'lambda': 0.2, 'metric': 'rmse', 'k': 20}",1.4158424440381085
