@@ -14,7 +14,10 @@ class BaseLineRecommender(object):
         Fit the model
         """
         self.model = BaselineOnly(
-            bsl_options={"method": "als", "n_epochs": 25, "reg_u": 5, "reg_i": 3}
+            bsl_options={'method': 'sgd',
+                         'n_epochs': 30, 
+                         'reg': 0.01, 
+                         'learning_rate': 0.01}
         )
         self.model.fit(train)
 
