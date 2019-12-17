@@ -1,4 +1,7 @@
-# Stacking several recommendataion models to create hybrid mo/del
+"""
+Ensemble several base models to create a mixed model to do prediction
+"""
+
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import ElasticNet, LinearRegression
@@ -8,9 +11,13 @@ from surprise.prediction_algorithms.co_clustering import CoClustering
 
 
 class EnsembleRecommender(AlgoBase):
+    """
+        Ensemble Recommendation Class
+    """
     def __init__(
         self, train_data, model_to_use=["baselineonly", "svd", "coClustering", "knn"]
     ):
+        """initialize class with full dataset and a set of base models to use"""
         AlgoBase.__init__(self)
         self.available_models = {
             "baselineonly": BaselineOnly(
@@ -31,6 +38,7 @@ class EnsembleRecommender(AlgoBase):
     def fit(
         self, train_data, ensemble_method="LR:plain", retrain=True, retrain_split_num=2
     ):
+        """fit the base models and ensemble with choices of weights"""
         kSplit = split.KFold(n_splits=retrain_split_num, shuffle=True)
         if retrain:
             print("**************** Start retraining models ******************")
@@ -107,6 +115,7 @@ class EnsembleRecommender(AlgoBase):
             )
 
     def estimate(self, u, i):
+        """estimate rating for given user and item"""
         if self.trainset.knows_user(u) and self.trainset.knows_item(i):
             algoResults = np.array(
                 [
@@ -145,3 +154,13 @@ class EnsembleRecommender(AlgoBase):
             }
             return rounding_pred, details
         return None
+
+    def rmse(self, testset):
+        """Calculate the RMSE of given dataset"""
+        pred = self.modeltest(testset.build_full_trainset().build_testset()))
+        return accuracy.rmse(pred)
+
+    def mae(self, testset):
+        """Calculate the MAE of given dataset"""
+        pred = self.modeltest(testset.build_full_trainset().build_testset()))
+        return accuracy.mae(pred)
