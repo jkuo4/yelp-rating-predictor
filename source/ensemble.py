@@ -1,14 +1,13 @@
-# Stacking several recommendataion models to create hybrid model
+# Stacking several recommendataion models to create hybrid mo/del
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import ElasticNet, LinearRegression
-
 from surprise import SVD, AlgoBase, BaselineOnly, KNNBasic, accuracy
 from surprise.model_selection import split
 from surprise.prediction_algorithms.co_clustering import CoClustering
 
 
-class StackingModel(AlgoBase):
+class EnsembleRecommender(AlgoBase):
     def __init__(
         self, train_data, model_to_use=["baselineonly", "svd", "coClustering", "knn"]
     ):

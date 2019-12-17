@@ -13,11 +13,10 @@ class BaseLineRecommender(object):
         """
         Fit the model
         """
-        baselineOnly = BaselineOnly(
+        self.model = BaselineOnly(
             bsl_options={"method": "als", "n_epochs": 25, "reg_u": 5, "reg_i": 3}
         )
-        baselineOnly.fit(train)
-        self.model = baselineOnly
+        self.model.fit(train)
 
     def predict(self, user_id, item_id):
         """
