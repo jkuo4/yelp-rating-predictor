@@ -30,3 +30,10 @@ class BaseLineRecommender(object):
         """
         pred = self.model.test(test)
         return accuracy.rmse(pred)
+    
+    def mae(self, test):
+        """
+        Calculate MAE for the predicted ratings
+        """
+        pred = self.model.test(test)
+        return accuracy.mae(pred)
