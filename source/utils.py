@@ -47,30 +47,45 @@ def plot_lines(x, y, title, x_lab, y_lab, legend_lab=None):
 
     fig, ax = plt.subplots(figsize=(6, 6))
     ax.plot(x, y)
-    step_size = (max(x)-min(x))/(len(x)-1)
-    ax.set_xticks(np.arange(min(x), max(x)+step_size, step_size))
+    step_size = (max(x) - min(x)) / (len(x) - 1)
+    ax.set_xticks(np.arange(min(x), max(x) + step_size, step_size))
     ax.set_title(title)
     ax.set_xlabel(x_lab)
     ax.set_ylabel(y_lab)
     if step_size < 1:
-        ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+        ax.xaxis.set_major_formatter(FormatStrFormatter("%.2f"))
     if legend_lab:
-        ax.legend(legend_lab, loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend(legend_lab, loc="center left", bbox_to_anchor=(1, 0.5))
 
 
-def create_quantile_bucket(metric, nTile, sort_asc=True):
+def create_quantile_bucket(metric, n_tile, sort_asc=True):
     """
     Output the distribution of the valuation metric
 
     :param metric: pandas Series containing associated valuation metric per ID
-    :param nTile: int, number of buckets to split data
-    :param sort_asc: bool, direction to rank the data in the quantile
-    :return : pyplot chart of the valuation metric per nTile of data
+    :param n_tile: int, number of buckets to split data
+    :param sort_asc: bool, direction to rank the data in the Quantile
+    :return : pyplot chart of the valuation metric per n_tile of data
     """
-    
-    metric_ranked = metric.rank(method='first', ascending=sort_asc)
-    metric_quantile = pd.Series(pd.qcut(metric_ranked, nTile, labels=False))
-    metric_quantile.name = 'Quantile'
+
+    metric_ranked = metric.rank(method="first", ascending=sort_asc)
+    metric_quantile = pd.Series(pd.qcut(metric_ranked, n_tile, labels=False))
+    metric_quantile.name = "Quantile"
     df = pd.concat([metric_quantile, metric], axis=1).reset_index()
-    df_grouped = df.groupby('Quantile').mean().reset_index()
-    return df_grouped.iloc[:,2]
+    df_grouped = df.groupby("Quantile").mean().reset_index()
+    return df_grouped.iloc[:, 2]
+
+
+def calculate_catalog_coverage(y_train, y_test, y_pred):
+    """
+    Calculate the fraction of items that are in the top-k for at least 1 user
+
+    :param y_train: Pandas dataframe containing business_id for training
+    :param y_test: Pandas dataframe containing business_id for testing
+    :param y_pred: Pandas dataframe containing business_id for prediction at k
+
+    :return :  catalog coverage in float
+    """
+    num_recommended_items = y_pred.business_id.nunique()
+    num_total_items = pd.concat([y_test, y_train]).business_id.nunique()
+    return num_recommended_items / num_total_items
