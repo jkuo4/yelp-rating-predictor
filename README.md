@@ -12,14 +12,14 @@ This project is broken down to a few components. Final results and takeaways are
 
 All the training was performed in various `_train.ipynb` notebooks using algorithms in `source/<model>.py` files.
 - Basline Model
-    Source code: .source/baseline.py
-    Training code: baseline_train.ipynb
+    - Source code: .source/baseline.py
+    - Training code: baseline_train.ipynb
 - Individule Model and Ensembling:
-    Source code: .source/ensemble.py
-    Training code: individual_train.ipynb / ensemble_train.ipynb
+    - Source code: .source/ensemble.py
+    - Training code: individual_train.ipynb / ensemble_train.ipynb
 - FM Model
-    Source code: .source/fm.py / .source/extract.py
-    Train code: fm_train.ipynb
+    - Source code: .source/fm.py / .source/extract.py
+    - Train code: fm_train.ipynb
 
 Raw data is stored in `data` dir (dataset removed due to github limitations but can be downloaded at https://www.yelp.com/dataset/challenge)
 
