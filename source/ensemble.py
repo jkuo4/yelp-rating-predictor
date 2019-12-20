@@ -5,7 +5,7 @@ Ensemble several base models to create a mixed model to do prediction
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import ElasticNet, LinearRegression
-from surprise import SVD, AlgoBase, BaselineOnly, KNNBasic, accuracy
+from surprise import SVD, AlgoBase, BaselineOnly, KNNWithMeans, accuracy
 from surprise.model_selection import split
 from surprise.prediction_algorithms.co_clustering import CoClustering
 
@@ -21,11 +21,11 @@ class EnsembleRecommender(AlgoBase):
         AlgoBase.__init__(self)
         self.available_models = {
             "baselineonly": BaselineOnly(
-                bsl_options={"method": "als", "n_epochs": 25, "reg_u": 5, "reg_i": 3}
+                bsl_options={"method": "sgd", "n_epochs": 30, "reg": 0.1, "learning_rate": 0.005}
             ),
-            "svd": SVD(lr_all=0.01, n_epochs=25, reg_all=0.2),
+            "svd": SVD(lr_all=0.005, n_factors=50, reg_all=0.1),
             "coClustering": CoClustering(n_epochs=3, n_cltr_u=3, n_cltr_i=3),
-            "knn": KNNBasic(k=40, sim_options={"name": "cosine", "user_based": False}),
+            "knn": KNNWithMeans(k=40, sim_options={"name": "cosine", "user_based": False}),
         }
         self.model_selection = []
         for model in model_to_use:
@@ -157,10 +157,10 @@ class EnsembleRecommender(AlgoBase):
 
     def rmse(self, testset):
         """Calculate the RMSE of given dataset"""
-        pred = self.modeltest(testset.build_full_trainset().build_testset()))
+        pred = self.model.test(testset.build_full_trainset().build_testset())
         return accuracy.rmse(pred)
 
     def mae(self, testset):
         """Calculate the MAE of given dataset"""
-        pred = self.modeltest(testset.build_full_trainset().build_testset()))
+        pred = self.model.test(testset.build_full_trainset().build_testset())
         return accuracy.mae(pred)
