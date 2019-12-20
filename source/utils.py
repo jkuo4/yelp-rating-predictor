@@ -77,7 +77,7 @@ def create_quantile_bucket(ranking_measure, metric, n_tile, sort_asc=True):
     return df_grouped.iloc[:, 2]
 
 
-def calculate_catalog_coverage(y_train, y_test, y_pred):
+def calculate_catalog_coverage(y_all, y_pred):
     """
     Calculate the fraction of items that are in the top-k for at least 1 user
 
@@ -88,7 +88,7 @@ def calculate_catalog_coverage(y_train, y_test, y_pred):
     :return :  catalog coverage in float
     """
     num_recommended_items = y_pred.business_id.nunique()
-    num_total_items = pd.concat([y_test, y_train]).business_id.nunique()
+    num_total_items = pd.Series(y_all).nunique()
     return num_recommended_items / num_total_items
 
 
