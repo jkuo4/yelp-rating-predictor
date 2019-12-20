@@ -50,4 +50,4 @@ Results are generated in `data/result` dir.
 ```
 
 ### Setup
-Install Spark version 2.4.4 and then set up conda env with `conda env create -f environment.yml`
+Set up conda env with `conda env create -f environment.yml`
