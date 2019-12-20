@@ -126,26 +126,27 @@ class EnsembleRecommender(AlgoBase):
                 ]
             )
             new_pred = self.intercept + np.sum(np.dot(self.weights, algoResults))
-            if new_pred >= 4.75:
-                rounding_pred = 5
-            elif new_pred >= 4.25:
-                rounding_pred = 4.5
-            elif new_pred > 3.75:
-                rounding_pred = 4
-            elif new_pred >= 3.25:
-                rounding_pred = 3.5
-            elif new_pred >= 3.25:
-                rounding_pred = 3.5
-            elif new_pred > 2.75:
-                rounding_pred = 3
-            elif new_pred >= 2.25:
-                rounding_pred = 2.5
-            elif new_pred > 1.75:
-                rounding_pred = 2
-            elif new_pred >= 1.25:
-                rounding_pred = 1.5
-            else:
-                rounding_pred = 1
+            rounding_pred = new_pred
+            # if new_pred >= 4.75:
+            #     rounding_pred = 5
+            # elif new_pred >= 4.25:
+            #     rounding_pred = 4.5
+            # elif new_pred > 3.75:
+            #     rounding_pred = 4
+            # elif new_pred >= 3.25:
+            #     rounding_pred = 3.5
+            # elif new_pred >= 3.25:
+            #     rounding_pred = 3.5
+            # elif new_pred > 2.75:
+            #     rounding_pred = 3
+            # elif new_pred >= 2.25:
+            #     rounding_pred = 2.5
+            # elif new_pred > 1.75:
+            #     rounding_pred = 2
+            # elif new_pred >= 1.25:
+            #     rounding_pred = 1.5
+            # else:
+            #     rounding_pred = 1
             details = {
                 "raw_predictions": algoResults,
                 "weights": self.weights,
