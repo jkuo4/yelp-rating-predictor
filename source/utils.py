@@ -58,20 +58,21 @@ def plot_lines(x, y, title, x_lab, y_lab, legend_lab=None):
         ax.legend(legend_lab, loc="center left", bbox_to_anchor=(1, 0.5))
 
 
-def create_quantile_bucket(metric, n_tile, sort_asc=True):
+def create_quantile_bucket(ranking_measure, metric, n_tile, sort_asc=True):
     """
-    Output the distribution of the valuation metric
+    Output the valuation metric distribution of the ranking measure
 
+    :param ranking_measure: pandas Series containing associated ranking measure
     :param metric: pandas Series containing associated valuation metric per ID
     :param n_tile: int, number of buckets to split data
     :param sort_asc: bool, direction to rank the data in the Quantile
     :return : pyplot chart of the valuation metric per n_tile of data
     """
 
-    metric_ranked = metric.rank(method="first", ascending=sort_asc)
-    metric_quantile = pd.Series(pd.qcut(metric_ranked, n_tile, labels=False))
-    metric_quantile.name = "Quantile"
-    df = pd.concat([metric_quantile, metric], axis=1).reset_index()
+    measure_ranked = ranking_measure.rank(method="first", ascending=sort_asc)
+    measure_quantile = pd.Series(pd.qcut(measure_ranked, n_tile, labels=False))
+    measure_quantile.name = "Quantile"
+    df = pd.concat([measure_quantile, metric], axis=1).reset_index()
     df_grouped = df.groupby("Quantile").mean().reset_index()
     return df_grouped.iloc[:, 2]
 
