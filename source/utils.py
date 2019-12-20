@@ -90,3 +90,22 @@ def calculate_catalog_coverage(y_train, y_test, y_pred):
     num_recommended_items = y_pred.business_id.nunique()
     num_total_items = pd.concat([y_test, y_train]).business_id.nunique()
     return num_recommended_items / num_total_items
+
+
+def chunks(lst, chunk_size):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(lst), chunk_size):
+        yield lst[i : i + chunk_size]
+
+
+def generate_combinations(feature, sample_n_users=5000, chunk_n_users=100):
+    """Generate user_id & business_id combinations"""
+    users = pd.Series(feature.user_id.unique()).sample(sample_n_users)
+    bus = pd.Series(feature.business_id.unique())
+
+    for chunk_users in chunks(users, chunk_n_users):
+        wide = pd.DataFrame(index=chunk_users, columns=bus)
+        wide.columns.name = "business_id"
+        wide.index.name = "user_id"
+        long = wide.reset_index().melt(id_vars="user_id").drop(columns="value")
+        yield long
